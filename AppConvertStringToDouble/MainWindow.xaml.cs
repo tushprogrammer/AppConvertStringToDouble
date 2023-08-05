@@ -90,8 +90,7 @@ namespace AppConvertStringToDouble
                 //подсчёт кол-ва минусов и их удаление
                 int count_minus = 0;
                 
-                //int minus_position = chars.Find(f => f == '-');
-                for (int i = chars.Count; i <= 0; i--)
+                for (int i = 0; i <= chars.Count-1; i++)
                 {
                     if (chars[i] == '-')
                     {
@@ -129,7 +128,7 @@ namespace AppConvertStringToDouble
 
                 double ret = 0;
 
-                int digit = 1;
+                int digit = 1; //разрядность
                 if (index_dot == -1)
                 {
                     //целое число
@@ -142,13 +141,13 @@ namespace AppConvertStringToDouble
                 else if (index_dot > 0)
                 {
                     //дробное число
-                    for (int i = index_dot - 1; i >= 0; i--)
+                    for (int i = index_dot - 1; i >= 0; i--) //целая часть
                     {
                         ret = ret + digit * CharToDouble(chars[i]);
                         digit = digit * 10;
                     }
                     digit = 10;
-                    for (int i = index_dot + 1; i < chars.Count; i++)
+                    for (int i = index_dot + 1; i < chars.Count; i++) //дробная часть
                     {
                         ret = ret + CharToDouble(chars[i]) / digit;
                         digit = digit * 10;
@@ -156,7 +155,7 @@ namespace AppConvertStringToDouble
                 }
                 else
                 {
-                    //есть разделитель, но он в начале
+                    //есть разделитель есть, но он в начале
                     throw new FormatException();
                 }
                 if (negative)
